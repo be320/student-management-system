@@ -9,8 +9,3 @@ spring:
 
 jwt:
    validity: 300
-
-server:
-  servlet:
-    session:
-      timeout: 10m
