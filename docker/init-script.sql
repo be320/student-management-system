@@ -1,0 +1,2 @@
+CREATE USER system_admin IDENTIFIED BY secret DEFAULT TABLESPACE users QUOTA UNLIMITED on users;
+GRANT ALL PRIVILEGES TO  system_admin;
