@@ -15,6 +15,12 @@ public class LoginResponse {
     @JsonProperty("token")
     private String token;
 
+    public LoginResponse(String username, String token){
+        this.username = username;
+        this.token = token;
+    }
+
+
     public String getUsername() {
         return username;
     }
