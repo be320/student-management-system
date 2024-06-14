@@ -26,13 +26,6 @@ services:
       - '6379:6379'
     volumes:
       - 'redis_data:/bitnami/redis/data'
-  sftp:
-    image: atmoz/sftp
-    container_name: sftp
-    restart: unless-stopped
-    ports:
-      - '900:22'
-    command: sftp-user:secret::documents
 volumes:
   oracle_data:
     driver: local
