@@ -10,5 +10,9 @@ spring:
     store-type: redis
     timeout: 10m  # Session timeout set to 10 minutes
 
+server:
+  servlet:
+    context-path: /api/system
+
 jwt:
    validity: 300

@@ -2,6 +2,7 @@ package com.education.system.service;
 
 import com.education.system.cache.entity.TokenCacheEntity;
 import com.education.system.cache.repo.TokenCacheRepository;
+import com.education.system.cache.repo.UserCacheRepository;
 import com.education.system.dto.LoginRequest;
 import com.education.system.dto.LoginResponse;
 import com.education.system.util.SecurityUtil;
@@ -20,6 +21,9 @@ public class AuthenticationService {
     TokenService tokenService;
 
     @Autowired
+    UserCacheRepository userCacheRepository;
+
+    @Autowired
     TokenCacheRepository tokenCacheRepository;
 
     public LoginResponse login(LoginRequest loginRequest) throws NoSuchAlgorithmException, InvalidKeyException {
@@ -28,7 +32,7 @@ public class AuthenticationService {
     }
 
     private String generateToken(String username, String role) throws NoSuchAlgorithmException, InvalidKeyException {
-        Map<String, String> claims = new HashMap<>();
+        Map<String, Object> claims = new HashMap<>();
         claims.put("iss", "web");
         claims.put("roles", role);
         String token =  tokenService.generateToken(claims, username);
