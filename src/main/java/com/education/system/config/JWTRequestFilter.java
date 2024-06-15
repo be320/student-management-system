@@ -33,11 +33,12 @@ public class JWTRequestFilter extends OncePerRequestFilter {
                 String jwtToken = requestTokenHeader.substring(7);
                 Claims claims = tokenService.getAllClaimsFromToken(jwtToken);
                 String issuer = claims.getIssuer();
-                if(issuer.equals("web")){
+                String username = claims.getSubject();
+                if(issuer.equals("web") && tokenService.isTokenValid(username, jwtToken)){
                    String role = (String) claims.get("roles");
                    List<GrantedAuthority> authorities = new ArrayList<>();
                    authorities.add(new SimpleGrantedAuthority(role));
-                    SecurityContextHolder.getContext().setAuthentication(new CustomAuthenticationToken(jwtToken, authorities));
+                   SecurityContextHolder.getContext().setAuthentication(new CustomAuthenticationToken(jwtToken, authorities));
                 }
                 else{
                     SecurityContextHolder.getContext().setAuthentication(new CustomAuthenticationToken(jwtToken, null));
