@@ -2,6 +2,8 @@ package com.education.system.controller;
 
 import com.education.system.dto.LoginRequest;
 import com.education.system.dto.LoginResponse;
+import com.education.system.dto.SignupRequest;
+import com.education.system.dto.SignupResponse;
 import com.education.system.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,14 +28,10 @@ public class AuthenticationController {
         return new ResponseEntity<>(loginResponse, HttpStatus.OK);
     }
 
-    private ResponseCookie setCookie(String cookieHash){
-        return ResponseCookie.from("tokenval", cookieHash)
-                .secure(true)
-                .httpOnly(true)
-                .maxAge(300)
-                .path("/")
-                .build();
+    @PostMapping("/signup")
+    public ResponseEntity<SignupResponse> signup(@RequestBody SignupRequest signupRequest) throws NoSuchAlgorithmException, InvalidKeyException {
+        SignupResponse signupResponse = authenticationService.signup(signupRequest);
+        return new ResponseEntity<>(signupResponse, HttpStatus.OK);
     }
-
 
 }
