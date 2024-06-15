@@ -1,18 +1,22 @@
 package com.education.system.service;
 
 import com.education.system.cache.entity.TokenCacheEntity;
+import com.education.system.cache.entity.UserCacheEntity;
 import com.education.system.cache.repo.TokenCacheRepository;
 import com.education.system.cache.repo.UserCacheRepository;
 import com.education.system.dto.LoginRequest;
 import com.education.system.dto.LoginResponse;
+import com.education.system.exception.InvalidPasswordException;
 import com.education.system.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class AuthenticationService {
@@ -26,7 +30,21 @@ public class AuthenticationService {
     @Autowired
     TokenCacheRepository tokenCacheRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     public LoginResponse login(LoginRequest loginRequest) throws NoSuchAlgorithmException, InvalidKeyException {
+        Optional<UserCacheEntity> userCacheEntity = userCacheRepository.findById(loginRequest.getUsername());
+        if(userCacheEntity.isPresent()){
+            String passwordInCache = userCacheEntity.get().getHashedPassword();
+            if(!passwordEncoder.matches(loginRequest.getPassword(), passwordInCache)){
+                throw new InvalidPasswordException();
+            }
+        }
+        else {
+            String hashedPassword = passwordEncoder.encode(loginRequest.getPassword());
+            userCacheRepository.save(new UserCacheEntity(loginRequest.getUsername(), hashedPassword));
+        }
         String token = generateToken(loginRequest.getUsername(), "student");
         return new LoginResponse(loginRequest.getUsername(), token);
     }
