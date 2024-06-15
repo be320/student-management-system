@@ -6,7 +6,10 @@ import com.education.system.cache.repo.TokenCacheRepository;
 import com.education.system.cache.repo.UserCacheRepository;
 import com.education.system.dto.LoginRequest;
 import com.education.system.dto.LoginResponse;
+import com.education.system.dto.SignupRequest;
+import com.education.system.dto.SignupResponse;
 import com.education.system.exception.InvalidPasswordException;
+import com.education.system.exception.UserAlreadyExistingException;
 import com.education.system.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,6 +43,19 @@ public class AuthenticationService {
             if(!passwordEncoder.matches(loginRequest.getPassword(), passwordInCache)){
                 throw new InvalidPasswordException();
             }
+        }
+        else {
+            String hashedPassword = passwordEncoder.encode(loginRequest.getPassword());
+            userCacheRepository.save(new UserCacheEntity(loginRequest.getUsername(), hashedPassword));
+        }
+        String token = generateToken(loginRequest.getUsername(), "student");
+        return new LoginResponse(loginRequest.getUsername(), token);
+    }
+
+    public SignupResponse signup(SignupRequest signupRequest) throws NoSuchAlgorithmException, InvalidKeyException {
+        Optional<UserCacheEntity> userCacheEntity = userCacheRepository.findById(signupRequest.getUsername());
+        if(userCacheEntity.isPresent()){
+            throw new UserAlreadyExistingException();
         }
         else {
             String hashedPassword = passwordEncoder.encode(loginRequest.getPassword());

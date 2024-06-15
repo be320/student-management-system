@@ -18,4 +18,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponse> invalidPasswordException(InvalidPasswordException exception){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(exception.errorCode, exception.errorMessage));
     }
+
+    @ExceptionHandler(UserAlreadyExistingException.class)
+    public ResponseEntity<ErrorResponse> userAlreadyExistingException(UserAlreadyExistingException exception){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(exception.errorCode, exception.errorMessage));
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ErrorResponse> invalidTokenException(InvalidTokenException exception){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(exception.errorCode, exception.errorMessage));
+    }
 }

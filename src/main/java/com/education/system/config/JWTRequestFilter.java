@@ -1,5 +1,6 @@
 package com.education.system.config;
 
+import com.education.system.exception.InvalidTokenException;
 import com.education.system.service.TokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -46,9 +47,11 @@ public class JWTRequestFilter extends OncePerRequestFilter {
             }
             catch (ExpiredJwtException ex){
                 logger.error("Token Expired : " + ex.getMessage());
+                throw new InvalidTokenException();
             }
             catch (Exception ex){
                 logger.error("Token Invalid : " + ex.getMessage());
+                throw new InvalidTokenException();
             }
         }
         if(request.getMethod().equals("OPTIONS")){

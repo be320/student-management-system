@@ -4,9 +4,9 @@ import com.education.system.util.enums.ErrorEnum;
 
 public class InvalidTokenException extends RuntimeException{
 
-    private String errorCode;
+    public String errorCode;
 
-    private String errorMessage;
+    public String errorMessage;
 
     public InvalidTokenException(){
         errorCode = ErrorEnum.INVALID_TOKEN.code;
