@@ -29,8 +29,8 @@ public class SecurityConfiguration {
         httpSecurity.csrf().disable().exceptionHandling().authenticationEntryPoint(authEntryPoint())
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
-                .requestMatchers("/api/**").authenticated()
-                .anyRequest().permitAll()
+                .requestMatchers("/auth/**").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
