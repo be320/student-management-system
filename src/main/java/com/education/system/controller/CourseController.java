@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/courses")
 public class CourseController {
 
-    @GetMapping
-    public ResponseEntity<CoursesResponse> viewCourses(){
-
-    }
+//    @GetMapping
+//    public ResponseEntity<CoursesResponse> viewCourses(){
+//
+//    }
 }

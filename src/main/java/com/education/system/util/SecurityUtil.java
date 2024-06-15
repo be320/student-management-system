@@ -1,6 +1,9 @@
 package com.education.system.util;
 
+import io.jsonwebtoken.Jwts;
+
 import javax.crypto.Mac;
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
@@ -9,8 +12,11 @@ import java.util.Base64;
 
 public class SecurityUtil {
 
-    public static String secretKey = "D2UOBRjesy48NEVGl+OqOgbdyE4zJJNMLS7sCbxunVgEyri6nc4+wK1RuAA4SLcm3YfbfKfFmn1cK7A/ywtkxQ==";
     public static String secretHmac = "system_hmac";
+
+    SecretKey getSigningKey() {
+        return Jwts.SIG.HS256.key().build();
+    }
 
     public static String hmacSHA256(String secret, String data) throws NoSuchAlgorithmException, InvalidKeyException {
         SecretKeySpec secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
