@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -26,4 +27,5 @@ public class TokenService {
     public Claims getAllClaimsFromToken(String token){
         return Jwts.parser().setSigningKey(SecurityUtil.secretKey).parseClaimsJws(token).getBody();
     }
+
 }
