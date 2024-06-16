@@ -42,7 +42,7 @@ public class TokenService {
 
         return Jwts.builder().setClaims(claims).setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + tokenValidityTimeInSeconds * 10000))
+                .setExpiration(new Date(System.currentTimeMillis() + tokenValidityTimeInSeconds * 1000))
                 .signWith(getSigningKey()).compact();
     }
 

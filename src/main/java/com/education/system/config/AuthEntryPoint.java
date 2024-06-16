@@ -21,9 +21,9 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        log.error("Security Error Happened : " + authException.getMessage() + " and the cause is : " + authException.getCause());
+        log.error("Technical Error Happened : " + authException.getMessage() + " and the cause is : " + authException.getCause());
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.getWriter().write(convertObjectToJson(new ErrorResponse(ErrorEnum.UNAUTHORIZED.code, ErrorEnum.UNAUTHORIZED.message)));
+        response.getWriter().write(convertObjectToJson(new ErrorResponse(ErrorEnum.TECHNICAL_ERROR.code, ErrorEnum.TECHNICAL_ERROR.message)));
     }
 
     private String convertObjectToJson(Object object) throws JsonProcessingException {
