@@ -1,6 +1,6 @@
 package com.education.system.exception;
 
-import com.education.system.dto.ErrorResponse;
+import com.education.system.dto.error.ErrorResponse;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;

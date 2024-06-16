@@ -4,16 +4,18 @@ import com.education.system.cache.entity.TokenCacheEntity;
 import com.education.system.cache.entity.UserCacheEntity;
 import com.education.system.cache.repo.TokenCacheRepository;
 import com.education.system.cache.repo.UserCacheRepository;
-import com.education.system.dto.LoginRequest;
-import com.education.system.dto.LoginResponse;
-import com.education.system.dto.SignupRequest;
-import com.education.system.dto.SignupResponse;
+import com.education.system.dto.auth.LoginRequest;
+import com.education.system.dto.auth.LoginResponse;
+import com.education.system.dto.auth.SignupRequest;
+import com.education.system.dto.auth.SignupResponse;
 import com.education.system.exception.InvalidPasswordException;
 import com.education.system.exception.UserAlreadyExistingException;
 import com.education.system.exception.UserNotFoundException;
 import com.education.system.model.Student;
 import com.education.system.repository.StudentRepository;
 import com.education.system.util.SecurityUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,8 @@ import java.util.Optional;
 
 @Service
 public class AuthenticationService {
+
+    private static final Logger log = LoggerFactory.getLogger(AuthenticationService.class);
 
     @Autowired
     TokenService tokenService;
@@ -47,10 +51,9 @@ public class AuthenticationService {
 
         //Check in Cache
         if(userCacheEntity.isPresent()){
+            log.info("User: {} found in the cache", loginRequest.getUsername());
             String passwordInCache = userCacheEntity.get().getHashedPassword();
-            if(!passwordEncoder.matches(loginRequest.getPassword(), passwordInCache)){
-                throw new InvalidPasswordException();
-            }
+            validatePassword(loginRequest.getPassword(), passwordInCache, loginRequest.getUsername());
         }
 
         //Check in Database
@@ -59,9 +62,7 @@ public class AuthenticationService {
             if(student == null)
                 throw new UserNotFoundException();
             else{
-                if(!passwordEncoder.matches(loginRequest.getPassword(), student.getPassword())){
-                    throw new InvalidPasswordException();
-                }
+                validatePassword(loginRequest.getPassword(), student.getPassword(), loginRequest.getUsername());
             }
         }
         String token = generateToken(loginRequest.getUsername(), "student");
@@ -101,5 +102,12 @@ public class AuthenticationService {
         String hmacTokenString = SecurityUtil.hmacSHA256(SecurityUtil.secretHmac, token);
         tokenCacheRepository.save(new TokenCacheEntity(username, hmacTokenString));
         return token;
+    }
+
+    private void validatePassword(String rawPassword, String encodedPassword, String username) {
+        if(!passwordEncoder.matches(rawPassword, encodedPassword)){
+            log.error("User: {} password is wrong", username);
+            throw new InvalidPasswordException();
+        }
     }
 }

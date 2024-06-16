@@ -1,11 +1,11 @@
-package com.education.system.dto;
+package com.education.system.dto.auth;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.antlr.v4.runtime.misc.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class LoginResponse {
+public class SignupResponse {
 
     @NotNull
     @JsonProperty("username")
@@ -15,7 +15,7 @@ public class LoginResponse {
     @JsonProperty("token")
     private String token;
 
-    public LoginResponse(String username, String token){
+    public SignupResponse(String username, String token){
         this.username = username;
         this.token = token;
     }

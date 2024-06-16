@@ -1,6 +1,4 @@
-package com.education.system.dto;
-
-import org.springframework.http.HttpStatusCode;
+package com.education.system.dto.error;
 
 public class ErrorResponse {
 

@@ -1,13 +1,12 @@
 package com.education.system.controller;
 
-import com.education.system.dto.LoginRequest;
-import com.education.system.dto.LoginResponse;
-import com.education.system.dto.SignupRequest;
-import com.education.system.dto.SignupResponse;
+import com.education.system.dto.auth.LoginRequest;
+import com.education.system.dto.auth.LoginResponse;
+import com.education.system.dto.auth.SignupRequest;
+import com.education.system.dto.auth.SignupResponse;
 import com.education.system.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

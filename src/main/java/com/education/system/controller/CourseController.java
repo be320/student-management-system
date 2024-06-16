@@ -1,18 +1,33 @@
 package com.education.system.controller;
 
+import com.education.system.dto.course.CreateCourseRequest;
+import com.education.system.dto.course.CreateCourseResponse;
+import com.education.system.dto.course.ViewCoursesResponse;
+import com.education.system.service.CourseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
 @RequestMapping("/courses")
 public class CourseController {
 
-//    @GetMapping
-//    public ResponseEntity<CoursesResponse> viewCourses(){
-//
-//    }
+    @Autowired
+    private CourseService courseService;
+
+    @GetMapping
+    public ResponseEntity<ViewCoursesResponse> viewCourses(){
+        ViewCoursesResponse viewCoursesResponse = courseService.viewCourses();
+        return new ResponseEntity<>(viewCoursesResponse, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<CreateCourseResponse> createCourse(@RequestBody CreateCourseRequest createCourseRequest) {
+        CreateCourseResponse createCourseResponse = courseService.createCourse(createCourseRequest);
+        return new ResponseEntity<>(createCourseResponse, HttpStatus.OK);
+    }
+
+    
 }
