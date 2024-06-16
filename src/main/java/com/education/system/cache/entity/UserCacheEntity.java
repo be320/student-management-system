@@ -10,10 +10,13 @@ public class UserCacheEntity {
     @Id
     private String username;
 
+    private Long userId;
+
     private String hashedPassword;
 
-    public UserCacheEntity(String username, String hashedPassword){
+    public UserCacheEntity(String username, Long userId, String hashedPassword){
         this.username = username;
+        this.userId = userId;
         this.hashedPassword = hashedPassword;
     }
 
@@ -23,6 +26,14 @@ public class UserCacheEntity {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getHashedPassword() {

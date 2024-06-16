@@ -17,19 +17,14 @@ public class Course {
     @Column(name = "course_code", unique = true, nullable = false)
     private String courseCode;
 
-    @Lob
-    @Column(name = "schedule")
-    private byte[] schedule;
-
     // Constructors, getters, and setters
 
     public Course() {
     }
 
-    public Course(String title, String courseCode, byte[] schedule) {
+    public Course(String title, String courseCode) {
         this.title = title;
         this.courseCode = courseCode;
-        this.schedule = schedule;
     }
 
     // Getters and setters
@@ -58,12 +53,5 @@ public class Course {
         this.courseCode = courseCode;
     }
 
-    public byte[] getSchedule() {
-        return schedule;
-    }
-
-    public void setSchedule(byte[] schedule) {
-        this.schedule = schedule;
-    }
 }
 

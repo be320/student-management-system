@@ -87,8 +87,8 @@ public class AuthenticationService {
         //Save in Database and  Cache
         else {
             String hashedPassword = passwordEncoder.encode(signupRequest.getPassword());
-            studentRepository.save(new Student(signupRequest.getName(), signupRequest.getUsername(), hashedPassword));
-            userCacheRepository.save(new UserCacheEntity(signupRequest.getUsername(), hashedPassword));
+            Student student = studentRepository.save(new Student(signupRequest.getName(), signupRequest.getUsername(), hashedPassword));
+            userCacheRepository.save(new UserCacheEntity(student.getUsername(), student.getId(), student.getPassword()));
         }
         String token = generateToken(signupRequest.getUsername(), "student");
         return new SignupResponse(signupRequest.getUsername(), token);

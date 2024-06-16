@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.antlr.v4.runtime.misc.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CreateCourseRequest {
+public class CourseDTO {
 
     @NotNull
     @JsonProperty("title")
@@ -15,7 +15,7 @@ public class CreateCourseRequest {
     @JsonProperty("courseCode")
     private String courseCode;
 
-    public CreateCourseRequest(String title, String courseCode) {
+    public CourseDTO(String title, String courseCode) {
         this.title = title;
         this.courseCode = courseCode;
     }

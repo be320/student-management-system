@@ -31,9 +31,9 @@ public class CourseController {
         return new ResponseEntity<>(createCourseResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/{courseCode}/upload-schedule")
-    public ResponseEntity<UploadScheduleResponse> uploadSchedule(@PathVariable String courseCode, @RequestParam("schedule") MultipartFile schedule) {
-        UploadScheduleResponse uploadScheduleResponse = courseService.uploadSchedule(courseCode, schedule);
-        return new ResponseEntity<>(uploadScheduleResponse, HttpStatus.OK);
-    }
+//    @PostMapping("/{courseCode}/upload-schedule")
+//    public ResponseEntity<UploadScheduleResponse> uploadSchedule(@PathVariable String courseCode, @RequestParam("schedule") MultipartFile schedule) {
+//        UploadScheduleResponse uploadScheduleResponse = courseService.uploadSchedule(courseCode, schedule);
+//        return new ResponseEntity<>(uploadScheduleResponse, HttpStatus.OK);
+//    }
 }
