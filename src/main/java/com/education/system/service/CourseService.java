@@ -7,14 +7,20 @@ import com.education.system.dto.course.*;
 import com.education.system.exception.EntityAlreadyExistingException;
 import com.education.system.entity.Course;
 import com.education.system.repository.CourseRepository;
+import com.education.system.util.CommonUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class CourseService {
 
+    private static final Logger log = LoggerFactory.getLogger(CourseService.class);
     @Autowired
     ScheduleCacheRepository scheduleCacheRepository;
 
@@ -24,21 +30,24 @@ public class CourseService {
     @Autowired
     CourseRepository courseRepository;
 
-//    public ViewCoursesResponse viewCourses(){
-//
-//        //Check in cache
-//        List<CourseCacheEntity> courseCacheEntities = CommonUtil.convertIterableToList(courseCacheRepository.findAll());
-//        if (!courseCacheEntities.isEmpty()){
-//            return new ViewCoursesResponse(courseCacheEntities.stream()
-//                    .map(CourseMapper.INSTANCE::courseCacheEntityToCourseDTO)
-//                    .collect(Collectors.toList()));
-//        }
-//
-//        //Check in database
-//        else{
-//          List<Course>  courseRepository.findAll();
-//        }
-//    }
+    public ViewCoursesResponse viewCourses(){
+
+        List<CourseDTO> coursesDTO = new ArrayList<>();
+
+        //Check in cache
+        List<CourseCacheEntity> courseCacheEntities = CommonUtil.convertIterableToList(courseCacheRepository.findAll());
+        if (!courseCacheEntities.isEmpty()){
+            courseCacheEntities.forEach(entity -> coursesDTO.add(new CourseDTO(entity.getTitle(), entity.getCourseCode())));
+            return new ViewCoursesResponse(coursesDTO);
+        }
+
+        //Check in database
+        else{
+            List<Course> courses = courseRepository.findAll();
+            courses.forEach(course -> coursesDTO.add(new CourseDTO(course.getTitle(), course.getCourseCode())));
+            return new ViewCoursesResponse(coursesDTO);
+        }
+    }
 
     public CreateCourseResponse createCourse(CreateCourseRequest createCourseRequest) {
 
