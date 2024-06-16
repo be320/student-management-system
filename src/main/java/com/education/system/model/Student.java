@@ -18,20 +18,13 @@ public class Student {
     private String username;
 
     @Column(name = "password", nullable = false)
-    private String password;  // Store hashed password
-
-    // Constructors, getters, and setters
-
-    public Student() {
-    }
+    private String password;
 
     public Student(String name, String username, String password) {
         this.name = name;
         this.username = username;
         this.password = password;
     }
-
-    // Getters and setters
 
     public Long getId() {
         return id;
