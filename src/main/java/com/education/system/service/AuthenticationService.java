@@ -9,8 +9,8 @@ import com.education.system.dto.auth.LoginResponse;
 import com.education.system.dto.auth.SignupRequest;
 import com.education.system.dto.auth.SignupResponse;
 import com.education.system.exception.InvalidPasswordException;
-import com.education.system.exception.UserAlreadyExistingException;
-import com.education.system.exception.UserNotFoundException;
+import com.education.system.exception.EntityAlreadyExistingException;
+import com.education.system.exception.EntityNotFoundException;
 import com.education.system.model.Student;
 import com.education.system.repository.StudentRepository;
 import com.education.system.util.SecurityUtil;
@@ -47,9 +47,9 @@ public class AuthenticationService {
     StudentRepository studentRepository;
 
     public LoginResponse login(LoginRequest loginRequest) throws NoSuchAlgorithmException, InvalidKeyException {
-        Optional<UserCacheEntity> userCacheEntity = userCacheRepository.findById(loginRequest.getUsername());
 
         //Check in Cache
+        Optional<UserCacheEntity> userCacheEntity = userCacheRepository.findById(loginRequest.getUsername());
         if(userCacheEntity.isPresent()){
             log.info("User: {} found in the cache", loginRequest.getUsername());
             String passwordInCache = userCacheEntity.get().getHashedPassword();
@@ -60,7 +60,7 @@ public class AuthenticationService {
         else {
             Student student = studentRepository.findByUsername(loginRequest.getUsername());
             if(student == null)
-                throw new UserNotFoundException();
+                throw new EntityNotFoundException();
             else{
                 validatePassword(loginRequest.getPassword(), student.getPassword(), loginRequest.getUsername());
             }
@@ -72,16 +72,16 @@ public class AuthenticationService {
 
 
     public SignupResponse signup(SignupRequest signupRequest) throws NoSuchAlgorithmException, InvalidKeyException {
-        Optional<UserCacheEntity> userCacheEntity = userCacheRepository.findById(signupRequest.getUsername());
 
         //Check in Cache
+        Optional<UserCacheEntity> userCacheEntity = userCacheRepository.findById(signupRequest.getUsername());
         if(userCacheEntity.isPresent()){
-            throw new UserAlreadyExistingException();
+            throw new EntityAlreadyExistingException();
         }
 
         //Check in Database
         else if(studentRepository.findByUsername(signupRequest.getUsername()) != null){
-            throw new UserAlreadyExistingException();
+            throw new EntityAlreadyExistingException();
         }
 
         //Save in Database and  Cache

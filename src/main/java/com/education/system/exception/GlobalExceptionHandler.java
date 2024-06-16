@@ -19,8 +19,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(exception.errorCode, exception.errorMessage));
     }
 
-    @ExceptionHandler(UserAlreadyExistingException.class)
-    public ResponseEntity<ErrorResponse> userAlreadyExistingException(UserAlreadyExistingException exception){
+    @ExceptionHandler(EntityAlreadyExistingException.class)
+    public ResponseEntity<ErrorResponse> userAlreadyExistingException(EntityAlreadyExistingException exception){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(exception.errorCode, exception.errorMessage));
     }
 
@@ -29,8 +29,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(exception.errorCode, exception.errorMessage));
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorResponse> userNotFoundException(UserNotFoundException exception){
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> userNotFoundException(EntityNotFoundException exception){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(exception.errorCode, exception.errorMessage));
     }
 }
