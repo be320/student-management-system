@@ -19,11 +19,11 @@ public class CourseController {
     @Autowired
     private CourseService courseService;
 
-    @GetMapping
-    public ResponseEntity<ViewCoursesResponse> viewCourses(){
-        ViewCoursesResponse viewCoursesResponse = courseService.viewCourses();
-        return new ResponseEntity<>(viewCoursesResponse, HttpStatus.OK);
-    }
+//    @GetMapping
+//    public ResponseEntity<ViewCoursesResponse> viewCourses(){
+//        ViewCoursesResponse viewCoursesResponse = courseService.viewCourses();
+//        return new ResponseEntity<>(viewCoursesResponse, HttpStatus.OK);
+//    }
 
     @PostMapping
     public ResponseEntity<CreateCourseResponse> createCourse(@RequestBody CreateCourseRequest createCourseRequest) {

@@ -11,7 +11,7 @@ import com.education.system.dto.auth.SignupResponse;
 import com.education.system.exception.InvalidPasswordException;
 import com.education.system.exception.EntityAlreadyExistingException;
 import com.education.system.exception.EntityNotFoundException;
-import com.education.system.model.Student;
+import com.education.system.entity.Student;
 import com.education.system.repository.StudentRepository;
 import com.education.system.util.SecurityUtil;
 import org.slf4j.Logger;

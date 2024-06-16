@@ -5,14 +5,12 @@ import com.education.system.cache.repo.CourseCacheRepository;
 import com.education.system.cache.repo.ScheduleCacheRepository;
 import com.education.system.dto.course.*;
 import com.education.system.exception.EntityAlreadyExistingException;
-import com.education.system.model.Course;
+import com.education.system.entity.Course;
 import com.education.system.repository.CourseRepository;
-import com.education.system.util.CommonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -26,21 +24,21 @@ public class CourseService {
     @Autowired
     CourseRepository courseRepository;
 
-    public ViewCoursesResponse viewCourses(){
-
-        //Check in cache
-        List<CourseCacheEntity> courseCacheEntities = CommonUtil.convertIterableToList(courseCacheRepository.findAll());
-        if (!courseCacheEntities.isEmpty()){
-            return new ViewCoursesResponse(courseCacheEntities.stream()
-                    .map(CourseMapper.INSTANCE::courseCacheEntityToCourseDTO)
-                    .collect(Collectors.toList()));
-        }
-
-        //Check in database
-        else{
-          List<Course>  courseRepository.findAll();
-        }
-    }
+//    public ViewCoursesResponse viewCourses(){
+//
+//        //Check in cache
+//        List<CourseCacheEntity> courseCacheEntities = CommonUtil.convertIterableToList(courseCacheRepository.findAll());
+//        if (!courseCacheEntities.isEmpty()){
+//            return new ViewCoursesResponse(courseCacheEntities.stream()
+//                    .map(CourseMapper.INSTANCE::courseCacheEntityToCourseDTO)
+//                    .collect(Collectors.toList()));
+//        }
+//
+//        //Check in database
+//        else{
+//          List<Course>  courseRepository.findAll();
+//        }
+//    }
 
     public CreateCourseResponse createCourse(CreateCourseRequest createCourseRequest) {
 

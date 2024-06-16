@@ -1,6 +1,5 @@
 package com.education.system.dto.course;
 
-import com.education.system.model.Course;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.antlr.v4.runtime.misc.NotNull;
