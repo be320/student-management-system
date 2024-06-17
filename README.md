@@ -14,6 +14,7 @@ This project is a Spring Boot application designed to manage student-related act
 - [Database Migration](#database-migration)
 - [Security](#security)
 - [Exception Handling](#exception-handling)
+- [Screenshots](#screenshots)
 
 ## Features
 
@@ -92,3 +93,7 @@ Flyway is used to manage database migrations. SQL files are located in the `src/
 ## Exception Handling
 
 Global exception handling is implemented using Controller Advice to provide consistent error responses.
+
+## Screenshots
+
+Screenshots showing test case scenarios from Postman are available in the `postman` folder.
