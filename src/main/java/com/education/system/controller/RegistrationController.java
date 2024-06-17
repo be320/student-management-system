@@ -21,9 +21,9 @@ public class RegistrationController {
         return new ResponseEntity<>(registerCourseResponse, HttpStatus.OK);
     }
 
-//    @DeleteMapping("/cancel")
-//    public ResponseEntity<String> cancelCourseRegistration(@RequestBody CourseRegistrationRequest courseRegistrationRequest) {
-//        String cancelRegistrationResponse = registrationService.cancelCourseRegistration(courseRegistrationRequest.getUsername(), courseRegistrationRequest.getCourseCode());
-//        return new ResponseEntity<>(cancelRegistrationResponse, HttpStatus.OK);
-//    }
+    @DeleteMapping("/cancel")
+    public ResponseEntity<String> cancelCourseRegistration(@RequestBody CourseRegistrationRequest courseRegistrationRequest) {
+        String cancelRegistrationResponse = registrationService.cancelCourseRegistration(courseRegistrationRequest.getUsername(), courseRegistrationRequest.getCourseCode());
+        return new ResponseEntity<>(cancelRegistrationResponse, HttpStatus.OK);
+    }
 }

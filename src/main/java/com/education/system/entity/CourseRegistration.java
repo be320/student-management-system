@@ -19,18 +19,12 @@ public class CourseRegistration {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @Column(name = "is_deleted")
-    private boolean deleted;
-
-    // Constructors, getters, and setters
-
     public CourseRegistration() {
     }
 
-    public CourseRegistration(Student student, Course course, boolean deleted) {
+    public CourseRegistration(Student student, Course course) {
         this.student = student;
         this.course = course;
-        this.deleted = deleted;
     }
 
     // Getters and setters
@@ -59,12 +53,5 @@ public class CourseRegistration {
         this.course = course;
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
 }
 

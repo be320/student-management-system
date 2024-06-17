@@ -39,8 +39,28 @@ public class RegistrationService {
             Optional<CourseRegistration> courseRegistration = courseRegistrationRepository.findByStudentIdAndCourseId(student.get().getId(), course.get().getId());
             if(courseRegistration.isPresent())
                 throw new EntityAlreadyExistingException();
-            courseRegistrationRepository.save(new CourseRegistration(student.get(), course.get(), false));
+            courseRegistrationRepository.save(new CourseRegistration(student.get(), course.get()));
             return "Registered Course Successfully";
+        }
+        else {
+            throw new EntityNotFoundException();
+        }
+    }
+
+    public String cancelCourseRegistration(String username, String courseCode) {
+
+        tokenService.checkUserAuthorization(username);
+        Optional<Course> course = courseRepository.findByCourseCode(courseCode);
+        Optional<Student> student = studentRepository.findByUsername(username);
+        if(student.isPresent() && course.isPresent()){
+            Optional<CourseRegistration> courseRegistration = courseRegistrationRepository.findByStudentIdAndCourseId(student.get().getId(), course.get().getId());
+            if(courseRegistration.isPresent()){
+                courseRegistrationRepository.deleteById(courseRegistration.get().getId());
+                return "Cancelled Course Registration Successfully";
+            }
+            else {
+                throw new EntityNotFoundException();
+            }
         }
         else {
             throw new EntityNotFoundException();
