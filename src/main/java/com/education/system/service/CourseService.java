@@ -80,21 +80,7 @@ public class CourseService {
     }
 
     public String uploadSchedule(String courseCode, MultipartFile schedule) throws IOException {
-
-        //Get Course Data
-        Long courseId = 0L;
-        Optional<CourseCacheEntity> courseCacheEntity = courseCacheRepository.findByCourseCode(courseCode);
-        if(courseCacheEntity.isPresent()){
-            courseId = courseCacheEntity.get().getCourseId();
-        }
-        else {
-            Optional<Course> course =  courseRepository.findByCourseCode(courseCode);
-            if(course.isEmpty())
-                throw new EntityNotFoundException();
-            courseId = course.get().getId();
-            courseCacheRepository.save(new CourseCacheEntity(course.get().getTitle(), course.get().getId(), course.get().getCourseCode()));
-        }
-
+        Long courseId = getCourse(courseCode);
         //Check if schedule already existing
         Optional<ScheduleCacheEntity> scheduleCacheEntity = scheduleCacheRepository.findById(courseId);
         if(scheduleCacheEntity.isPresent()){
@@ -118,9 +104,22 @@ public class CourseService {
     }
 
     public byte[] downloadSchedule(String courseCode){
+        Long courseId = getCourse(courseCode);
+        Optional<ScheduleCacheEntity> scheduleCacheEntity = scheduleCacheRepository.findById(courseId);
+        if(scheduleCacheEntity.isPresent()){
+            return scheduleCacheEntity.get().getSchedule();
+        }
+        else {
+            Optional<CourseSchedule> courseSchedule =  scheduleRepository.findByCourseId(courseId);
+            if(courseSchedule.isPresent())
+                return courseSchedule.get().getSchedule();
+            throw new EntityNotFoundException();
+        }
+    }
 
+    private Long getCourse(String courseCode){
         //Get Course Data
-        Long courseId = 0L;
+        Long courseId;
         Optional<CourseCacheEntity> courseCacheEntity = courseCacheRepository.findByCourseCode(courseCode);
         if(courseCacheEntity.isPresent()){
             courseId = courseCacheEntity.get().getCourseId();
@@ -132,16 +131,6 @@ public class CourseService {
             courseId = course.get().getId();
             courseCacheRepository.save(new CourseCacheEntity(course.get().getTitle(), course.get().getId(), course.get().getCourseCode()));
         }
-
-        Optional<ScheduleCacheEntity> scheduleCacheEntity = scheduleCacheRepository.findById(courseId);
-        if(scheduleCacheEntity.isPresent()){
-            return scheduleCacheEntity.get().getSchedule();
-        }
-        else {
-            Optional<CourseSchedule> courseSchedule =  scheduleRepository.findByCourseId(courseId);
-            if(courseSchedule.isPresent())
-                return courseSchedule.get().getSchedule();
-            throw new EntityNotFoundException();
-        }
+        return courseId;
     }
 }

@@ -3,9 +3,10 @@ package com.education.system.util.enums;
 public enum ErrorEnum {
     INVALID_PASSWORD("ERR-001", "Invalid User Password"),
     INVALID_TOKEN("ERR-002", "Invalid User Token"),
-    UNAUTHORIZED("ERR-003", "UNAUTHORIZED"),
+    INVALID_AUTHENTICATION("ERR-003", "Invalid User Authentication"),
     ENTITY_EXISTING("ERR-004", "Entity already exists"),
-    ENTITY_NOT_FOUND("ERR-005", "Entity not found");
+    ENTITY_NOT_FOUND("ERR-005", "Entity not found"),
+    USER_NOT_AUTHORIZED("ERR-006", "User not authorized");
 
     public final String code;
     public final String message;

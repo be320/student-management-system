@@ -33,4 +33,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponse> userNotFoundException(EntityNotFoundException exception){
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(exception.errorCode, exception.errorMessage));
     }
+
+    @ExceptionHandler(UserNotAuthorizedException.class)
+    public ResponseEntity<ErrorResponse> userNotAuthorizedException(UserNotAuthorizedException exception){
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ErrorResponse(exception.errorCode, exception.errorMessage));
+    }
 }

@@ -22,7 +22,7 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         log.error("Security Error Happened : " + authException.getMessage() + " and the cause is : " + authException.getCause());
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.getWriter().write(convertObjectToJson(new ErrorResponse(ErrorEnum.UNAUTHORIZED.code, ErrorEnum.UNAUTHORIZED.message)));
+        response.getWriter().write(convertObjectToJson(new ErrorResponse(ErrorEnum.INVALID_AUTHENTICATION.code, ErrorEnum.INVALID_AUTHENTICATION.message)));
     }
 
     private String convertObjectToJson(Object object) throws JsonProcessingException {

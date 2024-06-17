@@ -20,6 +20,10 @@ public class Student {
     @Column(name = "password", nullable = false)
     private String password;
 
+    public Student(){
+
+    }
+
     public Student(String name, String username, String password) {
         this.name = name;
         this.username = username;
