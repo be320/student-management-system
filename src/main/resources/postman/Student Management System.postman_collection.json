@@ -1,0 +1,495 @@
+{
+	"info": {
+		"_postman_id": "9f3735b5-8afd-4222-a3c1-1cdb8e3eb1f8",
+		"name": "Student Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8279707"
+	},
+	"item": [
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"ahmed\",\r\n    \"username\": \"user1\",\r\n    \"password\": \"abc123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/system/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"system",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"user1\",\r\n    \"password\": \"abc123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/system/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"system",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Login - Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user1\",\r\n    \"password\": \"abc123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/system/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"system",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"username\": \"user1\",\r\n    \"token\": \"eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6InN0dWRlbnQiLCJpc3MiOiJ3ZWIiLCJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxODYyMzM5NCwiZXhwIjoxNzE4NjIzNjk0fQ.H3bBkw8Dr0yZivpsUvg6ujkBgLh8ph2__KOVEmsnTRCQTNNIAhJpgM80jrR8IeiJ5N7ksxir3Ds8a4_RislViA\"\r\n}"
+				},
+				{
+					"name": "Login - Failure",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user1\",\r\n    \"password\": \"xyz456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/system/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"system",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"code\": \"ERR-001\",\r\n    \"message\": \"Invalid User Password\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Course",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6InN0dWRlbnQiLCJpc3MiOiJ3ZWIiLCJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxODYyNTUxNCwiZXhwIjoxNzE4NjI1ODE0fQ.SCcnw0Rf6kh3VAF8z38-2_JaKv0DgIcK3gTRxZx1TpRi98qWbl_n7d4ymrQD5UmkJEL7_dVCO1EXQVE1KnDrGQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Programming\",\r\n    \"courseCode\": \"CSE-121\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/system/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"system",
+						"courses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View Courses",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6InN0dWRlbnQiLCJpc3MiOiJ3ZWIiLCJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxODYyNTUxNCwiZXhwIjoxNzE4NjI1ODE0fQ.SCcnw0Rf6kh3VAF8z38-2_JaKv0DgIcK3gTRxZx1TpRi98qWbl_n7d4ymrQD5UmkJEL7_dVCO1EXQVE1KnDrGQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/system/courses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"system",
+						"courses"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "View Courses - Invalid Token",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/system/courses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"system",
+								"courses"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\"code\":\"ERR-003\",\"message\":\"Invalid User Authentication\"}"
+				},
+				{
+					"name": "View Courses - Success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/system/courses",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"system",
+								"courses"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"courses\": [\r\n        {\r\n            \"title\": \"Programming\",\r\n            \"courseCode\": \"CSE-121\"\r\n        }\r\n    ]\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Upload Schedule",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6InN0dWRlbnQiLCJpc3MiOiJ3ZWIiLCJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxODYyNTgzNywiZXhwIjoxNzE4NjI2MTM3fQ.YK4VRTgO7FnsKd7T1XPlzkT3nlbKO49xkY-tgIx4edKR7g3Bwqm6i0dPx7SKcrMvZaIGAs7ITVNwOclHey9X_Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "schedule",
+							"type": "file",
+							"src": "/C:/Users/Bahaa/Downloads/schedule.pdf"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/system/courses/CSE-121/upload-schedule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"system",
+						"courses",
+						"CSE-121",
+						"upload-schedule"
+					],
+					"query": [
+						{
+							"key": "schedule",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download Schedule",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6InN0dWRlbnQiLCJpc3MiOiJ3ZWIiLCJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxODYyNTgzNywiZXhwIjoxNzE4NjI2MTM3fQ.YK4VRTgO7FnsKd7T1XPlzkT3nlbKO49xkY-tgIx4edKR7g3Bwqm6i0dPx7SKcrMvZaIGAs7ITVNwOclHey9X_Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/system/courses/CSE-121/download-schedule",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"system",
+						"courses",
+						"CSE-121",
+						"download-schedule"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Course",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6InN0dWRlbnQiLCJpc3MiOiJ3ZWIiLCJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxODYyNjAxMSwiZXhwIjoxNzE4NjI2MzExfQ.XPgGdmvo2BeT4-BZw5pGj2zCF2D7ReLZiYQJ8rbP-wyPqE4A56h5LI5lAXvkEqS74iQB-5vb7EteNfZlarJ1lQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"user2\",\r\n    \"courseCode\": \"CSE-121\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/system/registrations/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"system",
+						"registrations",
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Register Course - Success",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user1\",\r\n    \"courseCode\": \"CSE-121\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/system/registrations/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"system",
+								"registrations",
+								"register"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "Registered Course Successfully"
+				},
+				{
+					"name": "Register Course - Not Authorized",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user2\",\r\n    \"courseCode\": \"CSE-121\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/system/registrations/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"system",
+								"registrations",
+								"register"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"code\": \"ERR-006\",\r\n    \"message\": \"User not authorized\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Cancel Course Registration",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJyb2xlcyI6InN0dWRlbnQiLCJpc3MiOiJ3ZWIiLCJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxODYyNjI3NiwiZXhwIjoxNzE4NjI2NTc2fQ.NxOlTQCKV_lLCnUADSBUX62Eaafr6zNhY7eOTVuQnaihJMh8--Y1dKNkZp2VOsnayZazwmzKdjzulAsft-Rgmg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"user1\",\r\n    \"courseCode\": \"CSE-121\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/system/registrations/cancel",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"system",
+						"registrations",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
