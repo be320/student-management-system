@@ -8,6 +8,8 @@ import org.springframework.data.redis.core.RedisHash;
 public class ScheduleCacheEntity {
 
     @Id
+    private Long courseId;
+
     private String courseCode;
 
     private byte[] schedule;
@@ -15,8 +17,9 @@ public class ScheduleCacheEntity {
     public ScheduleCacheEntity() {
     }
 
-    public ScheduleCacheEntity(String courseCode, byte[] schedule) {
+    public ScheduleCacheEntity(String courseCode, Long courseId, byte[] schedule) {
         this.courseCode = courseCode;
+        this.courseId = courseId;
         this.schedule = schedule;
     }
 
@@ -26,6 +29,14 @@ public class ScheduleCacheEntity {
 
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
+    }
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
     public byte[] getSchedule() {

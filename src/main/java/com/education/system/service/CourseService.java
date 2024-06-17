@@ -1,18 +1,24 @@
 package com.education.system.service;
 
 import com.education.system.cache.entity.CourseCacheEntity;
+import com.education.system.cache.entity.ScheduleCacheEntity;
 import com.education.system.cache.repo.CourseCacheRepository;
 import com.education.system.cache.repo.ScheduleCacheRepository;
 import com.education.system.dto.course.*;
+import com.education.system.entity.CourseSchedule;
 import com.education.system.exception.EntityAlreadyExistingException;
 import com.education.system.entity.Course;
+import com.education.system.exception.EntityNotFoundException;
 import com.education.system.repository.CourseRepository;
+import com.education.system.repository.ScheduleRepository;
 import com.education.system.util.CommonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +35,9 @@ public class CourseService {
 
     @Autowired
     CourseRepository courseRepository;
+
+    @Autowired
+    ScheduleRepository scheduleRepository;
 
     public ViewCoursesResponse viewCourses(){
 
@@ -52,13 +61,13 @@ public class CourseService {
     public CreateCourseResponse createCourse(CreateCourseRequest createCourseRequest) {
 
         //Check in cache
-        Optional<CourseCacheEntity> courseCacheEntity = courseCacheRepository.findById(createCourseRequest.getCourseCode());
+        Optional<CourseCacheEntity> courseCacheEntity = courseCacheRepository.findByCourseCode(createCourseRequest.getCourseCode());
         if(courseCacheEntity.isPresent()){
             throw new EntityAlreadyExistingException();
         }
 
         //Check in database
-        else if(courseRepository.findByCourseCode(createCourseRequest.getCourseCode()) != null){
+        else if(courseRepository.findByCourseCode(createCourseRequest.getCourseCode()).isPresent()){
             throw new EntityAlreadyExistingException();
         }
 
@@ -70,17 +79,41 @@ public class CourseService {
         return new CreateCourseResponse(createCourseRequest.getTitle(), createCourseRequest.getCourseCode());
     }
 
-//    public UploadScheduleResponse uploadSchedule(String courseCode, MultipartFile schedule){
-//
-//        //Check in Cache
-//        Optional<ScheduleCacheEntity> scheduleCacheEntity = scheduleCacheRepository.findById(courseCode);
-//        if(scheduleCacheEntity.isPresent()){
-//            throw new EntityAlreadyExistingException();
-//        }
-//
-//        //Check in Database
-//        else if(studentRepository.findByUsername(signupRequest.getUsername()) != null){
-//            throw new EntityAlreadyExistingException();
-//        }
-//    }
+    public String uploadSchedule(String courseCode, MultipartFile schedule) throws IOException {
+
+        //Get Course Data
+        Long courseId = 0L;
+        Optional<CourseCacheEntity> courseCacheEntity = courseCacheRepository.findByCourseCode(courseCode);
+        if(courseCacheEntity.isPresent()){
+            courseId = courseCacheEntity.get().getCourseId();
+        }
+        else {
+            Optional<Course> course =  courseRepository.findByCourseCode(courseCode);
+            if(course.isEmpty())
+                throw new EntityNotFoundException();
+            courseId = course.get().getId();
+            courseCacheRepository.save(new CourseCacheEntity(course.get().getTitle(), course.get().getId(), course.get().getCourseCode()));
+        }
+
+        //Check if schedule already existing
+        Optional<ScheduleCacheEntity> scheduleCacheEntity = scheduleCacheRepository.findById(courseId);
+        if(scheduleCacheEntity.isPresent()){
+            throw new EntityAlreadyExistingException();
+        }
+        else {
+            Optional<CourseSchedule> courseSchedule =  scheduleRepository.findByCourseId(courseId);
+            if(courseSchedule.isPresent())
+                throw new EntityAlreadyExistingException();
+        }
+
+        //Save the schedule
+        Optional<Course> course =  courseRepository.findById(courseId);
+        if(course.isPresent()){
+            CourseSchedule courseSchedule = scheduleRepository.save(new CourseSchedule(course.get(), schedule.getBytes()));
+            scheduleCacheRepository.save(new ScheduleCacheEntity(course.get().getCourseCode(), course.get().getId(), schedule.getBytes()));
+        }
+
+        return "Schedule uploaded successfully";
+
+    }
 }

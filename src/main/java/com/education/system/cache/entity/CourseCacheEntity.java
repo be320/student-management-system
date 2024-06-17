@@ -7,9 +7,9 @@ import org.springframework.data.redis.core.RedisHash;
 public class CourseCacheEntity {
 
     @Id
-    private String courseCode;
-
     private Long courseId;
+
+    private String courseCode;
 
     private String title;
 

@@ -58,11 +58,11 @@ public class AuthenticationService {
 
         //Check in Database
         else {
-            Student student = studentRepository.findByUsername(loginRequest.getUsername());
-            if(student == null)
+            Optional<Student> student = studentRepository.findByUsername(loginRequest.getUsername());
+            if(student.isEmpty())
                 throw new EntityNotFoundException();
             else{
-                validatePassword(loginRequest.getPassword(), student.getPassword(), loginRequest.getUsername());
+                validatePassword(loginRequest.getPassword(), student.get().getPassword(), loginRequest.getUsername());
             }
         }
         String token = generateToken(loginRequest.getUsername(), "student");
@@ -80,7 +80,7 @@ public class AuthenticationService {
         }
 
         //Check in Database
-        else if(studentRepository.findByUsername(signupRequest.getUsername()) != null){
+        else if(studentRepository.findByUsername(signupRequest.getUsername()).isPresent()){
             throw new EntityAlreadyExistingException();
         }
 
