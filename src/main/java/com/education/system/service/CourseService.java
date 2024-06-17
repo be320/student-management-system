@@ -116,4 +116,32 @@ public class CourseService {
         return "Schedule uploaded successfully";
 
     }
+
+    public byte[] downloadSchedule(String courseCode){
+
+        //Get Course Data
+        Long courseId = 0L;
+        Optional<CourseCacheEntity> courseCacheEntity = courseCacheRepository.findByCourseCode(courseCode);
+        if(courseCacheEntity.isPresent()){
+            courseId = courseCacheEntity.get().getCourseId();
+        }
+        else {
+            Optional<Course> course =  courseRepository.findByCourseCode(courseCode);
+            if(course.isEmpty())
+                throw new EntityNotFoundException();
+            courseId = course.get().getId();
+            courseCacheRepository.save(new CourseCacheEntity(course.get().getTitle(), course.get().getId(), course.get().getCourseCode()));
+        }
+
+        Optional<ScheduleCacheEntity> scheduleCacheEntity = scheduleCacheRepository.findById(courseId);
+        if(scheduleCacheEntity.isPresent()){
+            return scheduleCacheEntity.get().getSchedule();
+        }
+        else {
+            Optional<CourseSchedule> courseSchedule =  scheduleRepository.findByCourseId(courseId);
+            if(courseSchedule.isPresent())
+                return courseSchedule.get().getSchedule();
+            throw new EntityNotFoundException();
+        }
+    }
 }

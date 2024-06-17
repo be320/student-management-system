@@ -5,7 +5,9 @@ import com.education.system.dto.course.CreateCourseResponse;
 import com.education.system.dto.course.ViewCoursesResponse;
 import com.education.system.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,6 +43,9 @@ public class CourseController {
     @GetMapping("/{courseCode}/download-schedule")
     public ResponseEntity<byte[]> downloadSchedule(@PathVariable String courseCode) {
         byte[] schedule = courseService.downloadSchedule(courseCode);
-        return new ResponseEntity<>(schedule, HttpStatus.OK);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_PDF)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"course_schedule.pdf\"")
+                .body(schedule);
     }
 }
